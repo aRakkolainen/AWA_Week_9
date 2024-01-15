@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js")
+    script(src="javascripts/register.js")
+  body
+    block content
+  h1= title
+  form(action="" method="POST")
+    div(class="container")
+    label(for="input-email") Email:
+    br
+    input(type="email" id="input-email" placeholder="Enter email" required) 
+    br
+    label(for="input-password") Password: 
+    br
+    input(type="password" id="input-password" placeholder="Enter password" required)
+    br
+    input(type="submit" value="Register" id="submitBtn")
