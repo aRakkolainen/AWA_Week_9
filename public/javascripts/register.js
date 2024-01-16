@@ -2,12 +2,12 @@
 
 /*window.onload = () => {
     //let url = "/api/user/register"
-    //const registerForm = document.getElementById("register-form");
+    const registerForm = document.getElementById("register-form");
     // Elements from registering form: 
 
-    const submitBtn = document.getElementById("submitBtn");
+    //const submitBtn = document.getElementById("submitBtn");
     //registerForm.addEventListener("submit", onSubmit)
-    submitBtn.addEventListener("click", onSubmit)
+    registerForm.addEventListener("submit", onSubmit)
 
 }
 
@@ -29,6 +29,9 @@ async function onSubmit(event) {
         }, 
         body: JSON.stringify(newUser)
     })
+<<<<<<< Updated upstream
 
     //console.log(await response.json());
+=======
+>>>>>>> Stashed changes
 }*/

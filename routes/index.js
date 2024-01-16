@@ -6,6 +6,7 @@ const Todo = require("../models/Todo");
 const jwt = require("jsonwebtoken");
 const validateToken = require("../auth/validateToken.js");
 const {body, validationResult } = require("express-validator");
+<<<<<<< Updated upstream
 const multer = require("multer");
 const storage = multer.memoryStorage(); 
 const upload = multer(storage);
@@ -14,14 +15,24 @@ const upload = multer(storage);
 router.get('/', validateToken, function(req, res, next) {
   
   
+=======
+const multer = require("multer")
+const storage = multer.memoryStorage();
+const upload = multer({storage})
+
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  console.log(validateToken);
+>>>>>>> Stashed changes
   res.render('index', { title: 'index' });
 });
 router.get('/register.html', function(req, res) {
   res.render('register', {title: 'Register page'});
 })
 
-router.get('/login.html', function(req, res) {
-  res.render('login', {title: "Login page"})
+router.get('/login', function(req, res) {
+  res.render('login')
 })
 
 
@@ -30,41 +41,56 @@ router.post("/api/user/register",
   async (req, res) => {
     body("email").isEmail(),
     body("password").isStrongPassword({
-      minLength: 8,
-      minLowercase: 1,
-      minUppercase: 1, 
-      minNumbers: 1,
-      minSymbols: 1 
-    })
+    minLength: 8,
+    minLowercase: 1,
+    minUppercase: 1, 
+    minNumbers: 1,
+    minSymbols: 1 
+})
+   
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array()});
       }
       let statusNum; 
       let message; 
+      console.log(req.body)
       //Checking whether user already exists
       let user = await User.findOne({email: req.body.email}).exec(); 
       // User with this particular email doesn't exists, adding new one to the database
-      if (!user) {
+      if (!user && req.body.password !== undefined) {
         //Hashing the password: 
         let hashedPassword = await bcrypt.hash(req.body.password, 10);
         let newUser = new User({email: req.body.email, password: hashedPassword});
         await newUser.save(); 
-        statusNum = 200; 
+        //statusNum = 200; 
         //res.redirect("/login.html");
-        console.log("User added")
-        res.redirect("/login.html");
+        return res.redirect("login.html");
       } else {
         statusNum = 403; 
         message = {email: "Email already in use"};
-        res.status(statusNum).send(message);
+        //res.status(statusNum).send(message);
+        return res.redirect("register.html");
       }
       //res.status(statusNum).send(message).redirect("/login.html");
 
     })
 // Login with json webtoken is implemented based on course material!
+<<<<<<< Updated upstream
 router.post("/api/user/login",  
   upload.none(), async function(req, res) {
+=======
+router.post("/api/user/login",
+  upload.none(),  
+  body("email").isEmail(),
+  body("password").isStrongPassword({
+    minLength: 8,
+    minLowercase: 1,
+    minUppercase: 1, 
+    minNumbers: 1,
+    minSymbols: 1 
+  }), async function(req, res) {
+>>>>>>> Stashed changes
   // First checking if user with given email exists, in case that req.body is not empty!)
   if (req.body.email && req.body.password) {
     //Checking whether user already exists
@@ -86,6 +112,7 @@ router.post("/api/user/login",
             }, 
             (err, token) => {
               res.json({success: true, token});
+              res.redirect("/");
             }
           )
 

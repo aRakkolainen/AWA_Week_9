@@ -10,6 +10,7 @@ html
     block content
   h1= title
   form(action="/api/user/register" method="POST")
+<<<<<<< Updated upstream
     div(class="container")
     label(for="input-email") Email:
     br
@@ -20,3 +21,14 @@ html
     input(name="password" type="password" id="input-password" placeholder="Enter password" required)
     br
     input(type="submit" value="Register" id="submitBtn")
+=======
+      label(for="input-email") Email:
+      br
+      input(type="email" id="input-email" name="email" placeholder="Enter email" required) 
+      br
+      label(for="input-password") Password: 
+      br
+      input(type="password" id="input-password" name="password" placeholder="Enter password" required)
+      br
+      input(type="submit" value="Register" id="submitBtn")
+>>>>>>> Stashed changes
