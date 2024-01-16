@@ -84,8 +84,9 @@ router.post("/api/user/login",
               expiresIn: 120
             }, 
             (err, token) => {
-              //res.json({success: true, token}).redirect("/");
-              res.redirect("/");
+              console.log(token);
+              res.json({success: true, token});
+              //res.redirect("/");
             }
           )
 

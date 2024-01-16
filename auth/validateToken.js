@@ -18,7 +18,6 @@ module.exports = function(req, res, next) {
             if(err) return res.sendStatus(401);
                 req.email = user.email;
                 next(); 
-            //return res.send({email: user.email})
             
         })
     }

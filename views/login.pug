@@ -5,12 +5,11 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js")
-    script(src="javascripts/login.js")
   body
     block content
   h1= title
   div(id="error")
-  form(action="" method="POST" id="login-form")
+  form(action="/api/user/login" id="login-form" method="POST")
     div(class="container")
     label(for="input-email") Email:
     br
@@ -21,3 +20,4 @@ html
     input(name="password" type="password" id="input-password" placeholder="Enter password" required)
     br
     input(type="submit" value="Login" id="submitBtn")
+  script(src="javascripts/login.js")

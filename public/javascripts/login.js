@@ -1,12 +1,17 @@
 
 //This file is created based on the lecture materials from week 9!!
+if (document.readyState !== "loading") {
+    initializeCodeLogin(); 
+} else {
+    document.addEventListener("DOMContentLoaded", function() {
+        initializeCodeLogin();
+    })
+}
 
-window.onload(initializeCodeLogin())
 
 function initializeCodeLogin(){
     document.getElementById("login-form").addEventListener("submit", onSubmit);
 }
-
 
 async function onSubmit(event) {
     event.preventDefault(); 
@@ -17,6 +22,7 @@ async function onSubmit(event) {
     })
     .then((response) => response.json())
     .then((data) => {
+        console.log(data.token)
         if (data.token) {
             storeToken(data.token); 
             window.location.href="/";
