@@ -30,6 +30,7 @@ router.post("/api/user/register",
       minNumbers: 1,
       minSymbols: 1 
     })
+    console.log(req.body)
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array()});
@@ -58,8 +59,8 @@ router.post("/api/user/register",
     })
 // Login with json webtoken is implemented based on course material!
 router.post("/api/user/login",  
-  body("email").isEmail(),
-  body("password").isStrongPassword({
+  body("input-email").isEmail(),
+  body("input-password").isStrongPassword({
     minLength: 8,
     minLowercase: 1,
     minUppercase: 1, 

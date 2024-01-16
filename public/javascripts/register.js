@@ -1,6 +1,6 @@
 //Based on lecture materials!
 
-window.onload = () => {
+/*window.onload = () => {
     //let url = "/api/user/register"
     //const registerForm = document.getElementById("register-form");
     // Elements from registering form: 
@@ -30,5 +30,5 @@ async function onSubmit(event) {
         body: JSON.stringify(newUser)
     })
 
-    console.log(await response.json());
-}
+    //console.log(await response.json());
+}*/
