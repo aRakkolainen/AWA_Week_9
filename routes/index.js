@@ -6,27 +6,14 @@ const Todo = require("../models/Todo");
 const jwt = require("jsonwebtoken");
 const validateToken = require("../auth/validateToken.js");
 const {body, validationResult } = require("express-validator");
-<<<<<<< Updated upstream
 const multer = require("multer");
 const storage = multer.memoryStorage(); 
 const upload = multer(storage);
 
 /* GET home page. */
 router.get('/', validateToken, function(req, res, next) {
-  
-  
-=======
-const multer = require("multer")
-const storage = multer.memoryStorage();
-const upload = multer({storage})
-
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  console.log(validateToken);
->>>>>>> Stashed changes
-  res.render('index', { title: 'index' });
-});
+  res.render({index, title: "index"})
+})
 router.get('/register.html', function(req, res) {
   res.render('register', {title: 'Register page'});
 })
@@ -76,21 +63,8 @@ router.post("/api/user/register",
 
     })
 // Login with json webtoken is implemented based on course material!
-<<<<<<< Updated upstream
-router.post("/api/user/login",  
-  upload.none(), async function(req, res) {
-=======
 router.post("/api/user/login",
-  upload.none(),  
-  body("email").isEmail(),
-  body("password").isStrongPassword({
-    minLength: 8,
-    minLowercase: 1,
-    minUppercase: 1, 
-    minNumbers: 1,
-    minSymbols: 1 
-  }), async function(req, res) {
->>>>>>> Stashed changes
+  upload.none(), async function(req, res) {
   // First checking if user with given email exists, in case that req.body is not empty!)
   if (req.body.email && req.body.password) {
     //Checking whether user already exists
