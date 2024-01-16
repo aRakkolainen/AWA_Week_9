@@ -6,9 +6,14 @@ const Todo = require("../models/Todo");
 const jwt = require("jsonwebtoken");
 const validateToken = require("../auth/validateToken.js");
 const {body, validationResult } = require("express-validator");
+const multer = require("multer");
+const storage = multer.memoryStorage(); 
+const upload = multer(storage);
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', validateToken, function(req, res, next) {
+  
+  
   res.render('index', { title: 'index' });
 });
 router.get('/register.html', function(req, res) {
@@ -18,6 +23,7 @@ router.get('/register.html', function(req, res) {
 router.get('/login.html', function(req, res) {
   res.render('login', {title: "Login page"})
 })
+
 
 //Registering is done here because users.js isn't working for some reason!
 router.post("/api/user/register", 
@@ -30,7 +36,6 @@ router.post("/api/user/register",
       minNumbers: 1,
       minSymbols: 1 
     })
-    console.log(req.body)
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array()});
@@ -59,14 +64,7 @@ router.post("/api/user/register",
     })
 // Login with json webtoken is implemented based on course material!
 router.post("/api/user/login",  
-  body("input-email").isEmail(),
-  body("input-password").isStrongPassword({
-    minLength: 8,
-    minLowercase: 1,
-    minUppercase: 1, 
-    minNumbers: 1,
-    minSymbols: 1 
-  }), async function(req, res) {
+  upload.none(), async function(req, res) {
   // First checking if user with given email exists, in case that req.body is not empty!)
   if (req.body.email && req.body.password) {
     //Checking whether user already exists
@@ -120,16 +118,6 @@ router.post("/api/todos", validateToken, async (req, res) => {
       currentTodos.items.addToSet(req.body.items);
       await currentTodos.save();
     }
-    // Appending the current todo list
-    /*let currentItems = currentTodos.items;
-    let newItems = req.body.items;
-    req.body.items.forEach(item => async () => {
-      console.log(item)
-      const result = await currentTodos.updateOne({$push: {items: item}});
-    });
-    //const result = await Todo.updateOne(currentTodos, newItems);
-    //console.log(result)*/
-    //console.log(await Todo.findOne(query).exec())
     res.send("ok")
   } 
 })
