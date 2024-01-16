@@ -18,8 +18,8 @@ router.get('/register.html', function(req, res) {
   res.render('register', {title: 'Register page'});
 })
 
-router.get('/login', function(req, res) {
-  res.render('login')
+router.get('/login.html', function(req, res) {
+  res.render('login', {title: "Login page"})
 })
 
 
@@ -41,7 +41,6 @@ router.post("/api/user/register",
       }
       let statusNum; 
       let message; 
-      console.log(req.body)
       //Checking whether user already exists
       let user = await User.findOne({email: req.body.email}).exec(); 
       // User with this particular email doesn't exists, adding new one to the database
@@ -52,12 +51,12 @@ router.post("/api/user/register",
         await newUser.save(); 
         //statusNum = 200; 
         //res.redirect("/login.html");
-        return res.redirect("login.html");
+        return res.redirect("/login.html");
       } else {
         statusNum = 403; 
         message = {email: "Email already in use"};
-        //res.status(statusNum).send(message);
-        return res.redirect("register.html");
+        res.status(statusNum).send(message);
+        //return res.redirect("/register.html");
       }
       //res.status(statusNum).send(message).redirect("/login.html");
 
@@ -85,7 +84,7 @@ router.post("/api/user/login",
               expiresIn: 120
             }, 
             (err, token) => {
-              res.json({success: true, token});
+              //res.json({success: true, token}).redirect("/");
               res.redirect("/");
             }
           )
