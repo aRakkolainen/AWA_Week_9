@@ -12,17 +12,21 @@ if (document.readyState !== "loading") {
 function initializeCodeLogin(){
     document.getElementById("login-form").addEventListener("submit", onSubmit);
 }
+function renderPrivate() {
 
+}
 async function onSubmit(event) {
     event.preventDefault(); 
     const formData = new FormData(event.target);
+    //let response = await fetch("api/user/login");
+    //console.log(response.headers)
     fetch("/api/user/login", {
         method: "POST", 
         body: formData
     })
     .then((response) => response.json())
     .then((data) => {
-        console.log(data.token)
+        console.log(data)
         if (data.token) {
             storeToken(data.token); 
             window.location.href="/";
@@ -33,6 +37,7 @@ async function onSubmit(event) {
                 document.getElementById("error").innerHTML = "Strange error!";
             }
         }
+        return false;
     })
 
 

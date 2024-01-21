@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express');
 var router = express.Router();
 const bcrypt = require("bcrypt");
@@ -12,6 +13,7 @@ const upload = multer(storage);
 
 /* GET home page. */
 router.get('/', validateToken, function(req, res, next) {
+  console.log("HELLO")
   res.render({index, title: "index"})
 })
 router.get('/register.html', function(req, res) {
@@ -77,19 +79,16 @@ router.post("/api/user/login",
           const jwtPayload = {
             email: user.email
           }
+          var token = 
           jwt.sign(
             jwtPayload, 
-            process.env.SECRET, 
-            {
-              expiresIn: 120
-            }, 
-            (err, token) => {
-              console.log(token);
-              res.json({success: true, token});
-              //res.redirect("/");
-            }
+            process.env.SECRET
           )
+            res.json({success: true, "token": token});
+            
 
+        } else {
+            res.status(403).json({message: "Failed!"});
         }
       })
     }
