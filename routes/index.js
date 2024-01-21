@@ -101,9 +101,9 @@ router.get("/api/private", validateToken, (req, res) => {
   res.send({email: req.email})
 })
 
-router.post("/api/todos", validateToken, async (req, res) => {
+router.post("/api/todos", async (req, res) => {
+  console.log(req.body);
   let loggedEmail = req.email;
-  console.log(req.email);
   // Finding the userID from database
   let user = await User.findOne({email: loggedEmail}).exec();
   // Checking if the user already has some todos
@@ -121,5 +121,17 @@ router.post("/api/todos", validateToken, async (req, res) => {
     }
     res.send("ok")
   } 
+})
+
+router.get("/api/todos", validateToken, async (req, res) => {
+  let loggedEmail = req.email;
+  // Finding the userID from database
+  let user = await User.findOne({email: loggedEmail}).exec();
+  const query = {user: user._id};
+  let todos = await Todo.findOne(query).exec(); 
+  if (todos) {
+    console.log(todos)
+    res.send(todos.items);
+  }
 })
 module.exports = router;

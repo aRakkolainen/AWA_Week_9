@@ -7,7 +7,6 @@ window.onload = async () => {
             "authorization": header
         }
     })
-    console.log(response.status)
     //let text = await response.json(); 
     //console.log(text);
     if (response.status == 401) {
@@ -27,9 +26,11 @@ window.onload = async () => {
         document.body.appendChild(register);
     } else {
         console.log("AUTHENTICATED ACCESS PROVIDED!");
+        //Rendering existing items: 
         let email = await response.json(); 
         let logOutBtn = document.createElement("button");
         logOutBtn.innerHTML = "Logout"
+        logOutBtn.setAttribute("id", "logout");
         let user = document.createElement("p");
         user.innerText = email.email;
         document.body.appendChild(logOutBtn);
@@ -47,20 +48,30 @@ window.onload = async () => {
         //Based on this: https://blog.devgenius.io/how-to-detect-the-pressing-of-the-enter-key-in-a-text-input-field-with-javascript-380fb2be2b9e
         todo.addEventListener("keyup", async (event) => {
             if (event.key === "Enter") {
-                let todoItem = {
-                    "items": [todo.value]
-                }
+                console.log(todo.value)
                 if (todo.value) {
+                    let todoItem = {
+                        "items": [todo.value]
+                    }
                     let result = await fetch("/api/todos", {
                         method: "POST", 
-                        body: JSON.stringify(todoItem)
-                    
+                        headers: {
+                            "Content-type": "application/json", 
+                        }, 
+                        body: JSON.stringify(todoItem)                   
                     })
-                    console.log(result)
+                    console.log(result.status);
                 }
             }
         })
-
-
+        //Rendering existing items: 
+        let todosResponse = await fetch("/api/todos", {
+            method: "GET", 
+            headers: {
+                "authorization": header
+            }
+        })
+        let todos = await todosResponse.json(); 
+        console.log(todos);
     }
 }
