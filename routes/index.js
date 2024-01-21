@@ -84,7 +84,7 @@ router.post("/api/user/login",
             jwtPayload, 
             process.env.SECRET
           )
-            res.json({success: true, "token": token});
+            res.json({success: true, token});
             
 
         } else {
