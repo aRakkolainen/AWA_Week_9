@@ -12,9 +12,9 @@ const storage = multer.memoryStorage();
 const upload = multer(storage);
 
 /* GET home page. */
-router.get('/', validateToken, function(req, res, next) {
-  console.log("HELLO")
-  res.render({index, title: "index"})
+router.get('/', function(req, res, next) {
+  //console.log(validateToken());
+  res.render('index', {title: "index"})
 })
 router.get('/register.html', function(req, res) {
   res.render('register', {title: 'Register page'});

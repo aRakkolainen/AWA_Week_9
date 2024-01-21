@@ -1,32 +1,18 @@
-
+window.onload = async () => {
 //This file is created based on the lecture materials from week 9!!
-if (document.readyState !== "loading") {
-    initializeCodeLogin(); 
-} else {
-    document.addEventListener("DOMContentLoaded", function() {
-        initializeCodeLogin();
-    })
-}
-
-
-function initializeCodeLogin(){
     document.getElementById("login-form").addEventListener("submit", onSubmit);
+    console.log("login...")
 }
-function renderPrivate() {
 
-}
 async function onSubmit(event) {
     event.preventDefault(); 
     const formData = new FormData(event.target);
-    //let response = await fetch("api/user/login");
-    //console.log(response.headers)
     fetch("/api/user/login", {
         method: "POST", 
         body: formData
     })
     .then((response) => response.json())
     .then((data) => {
-        console.log(data)
         if (data.token) {
             storeToken(data.token); 
             window.location.href="/";
@@ -47,3 +33,4 @@ async function onSubmit(event) {
 function storeToken(token) {
     localStorage.setItem("auth_token", token);
 }
+
