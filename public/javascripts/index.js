@@ -39,6 +39,28 @@ window.onload = async () => {
             localStorage.removeItem("auth_token");
         })
 
+        let todo = document.createElement("input");
+        todo.setAttribute("type", "text");
+        todo.setAttribute("id", "add-item");
+        todo.setAttribute("placeholder", "Add todo..");
+        document.body.appendChild(todo);
+        //Based on this: https://blog.devgenius.io/how-to-detect-the-pressing-of-the-enter-key-in-a-text-input-field-with-javascript-380fb2be2b9e
+        todo.addEventListener("keyup", async (event) => {
+            if (event.key === "Enter") {
+                let todoItem = {
+                    "items": [todo.value]
+                }
+                if (todo.value) {
+                    let result = await fetch("/api/todos", {
+                        method: "POST", 
+                        body: JSON.stringify(todoItem)
+                    
+                    })
+                    console.log(result)
+                }
+            }
+        })
+
 
     }
 }

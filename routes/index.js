@@ -103,6 +103,7 @@ router.get("/api/private", validateToken, (req, res) => {
 
 router.post("/api/todos", validateToken, async (req, res) => {
   let loggedEmail = req.email;
+  console.log(req.email);
   // Finding the userID from database
   let user = await User.findOne({email: loggedEmail}).exec();
   // Checking if the user already has some todos
