@@ -7,9 +7,10 @@ window.onload = async () => {
             "authorization": header
         }
     })
-    let text = await response.json(); 
+    console.log(response.status)
+    //let text = await response.json(); 
     //console.log(text);
-    if (text === "Unauthorized") {
+    if (response.status == 401) {
         console.log("NO ACCESSS!");
         // Creating links: https://www.geeksforgeeks.org/how-to-create-a-link-in-javascript/
         let register = document.createElement("a");
@@ -22,15 +23,15 @@ window.onload = async () => {
         login.appendChild(loginLink)
         login.title = "Login";
         login.href = "/login.html";
-        document.body.appendChild(register);
         document.body.appendChild(login);
+        document.body.appendChild(register);
     } else {
         console.log("AUTHENTICATED ACCESS PROVIDED!");
-        console.log(text.email)
+        let email = await response.json(); 
         let logOutBtn = document.createElement("button");
         logOutBtn.innerHTML = "Logout"
         let user = document.createElement("p");
-        user.innerText = text.email;
+        user.innerText = email.email;
         document.body.appendChild(logOutBtn);
         document.body.appendChild(user);
 
