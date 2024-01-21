@@ -15,12 +15,10 @@ window.onload = async () => {
         let register = document.createElement("a");
         let registerLink = document.createTextNode("Register");
         register.appendChild(registerLink)
-        register.title = "Register";
         register.href = "/register.html";
         let login = document.createElement("a");
         let loginLink = document.createTextNode("Login");
         login.appendChild(loginLink)
-        login.title = "Login";
         login.href = "/login.html";
         document.body.appendChild(login);
         document.body.appendChild(register);
@@ -57,6 +55,7 @@ window.onload = async () => {
                         method: "POST", 
                         headers: {
                             "Content-type": "application/json", 
+                            "authorization": "Bearer " + localStorage.getItem("auth_token")
                         }, 
                         body: JSON.stringify(todoItem)                   
                     })
@@ -65,12 +64,7 @@ window.onload = async () => {
             }
         })
         //Rendering existing items: 
-        let todosResponse = await fetch("/api/todos", {
-            method: "GET", 
-            headers: {
-                "authorization": header
-            }
-        })
+        let todosResponse = await fetch("/api/todos")
         let todos = await todosResponse.json(); 
         console.log(todos);
     }

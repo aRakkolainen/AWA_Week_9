@@ -101,7 +101,7 @@ router.get("/api/private", validateToken, (req, res) => {
   res.send({email: req.email})
 })
 
-router.post("/api/todos", async (req, res) => {
+router.post("/api/todos", validateToken,  async (req, res) => {
   console.log(req.body);
   let loggedEmail = req.email;
   // Finding the userID from database
@@ -123,7 +123,7 @@ router.post("/api/todos", async (req, res) => {
   } 
 })
 
-router.get("/api/todos", validateToken, async (req, res) => {
+router.get("/api/todos", validateToken,  async (req, res) => {
   let loggedEmail = req.email;
   // Finding the userID from database
   let user = await User.findOne({email: loggedEmail}).exec();
