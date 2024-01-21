@@ -36,6 +36,7 @@ window.onload = async () => {
 
         logOutBtn.addEventListener("click", () => {
             localStorage.removeItem("auth_token");
+            window.location.href="/";
         })
 
         let todo = document.createElement("input");
